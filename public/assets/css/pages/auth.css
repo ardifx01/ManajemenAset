@@ -1,0 +1,482 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  background-size: cover;
+  /* overflow: hidden; */
+  overflow-x: hidden;
+  user-select: none;
+  touch-action: none;
+  padding-top: 50px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.blue-gradient-rg,
+.yellow-gradient-rg,
+.yellow-gradient-lf,
+.blue-gradient-lf {
+  content: "";
+  position: absolute;
+  width: 100%;
+  max-width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  z-index: -2;
+  filter: blur(100px);
+}
+
+.blue-gradient-rg {
+  background: radial-gradient(
+    circle,
+    rgba(0, 30, 154, 0.6) 0%,
+    rgba(255, 255, 255, 0) 50%
+  );
+  bottom: 50%;
+  right: -20%;
+}
+
+.yellow-gradient-rg {
+  background: radial-gradient(
+    circle,
+    rgba(234, 182, 48, 0.6) 0%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  top: 30%;
+  right: -20%;
+}
+
+.yellow-gradient-lf {
+  background: radial-gradient(
+    circle,
+    rgba(234, 182, 48, 0.4) 0%,
+    rgba(255, 255, 255, 0) 50%
+  );
+  top: -20%;
+  left: -20%;
+}
+
+.blue-gradient-lf {
+  background: radial-gradient(
+    circle,
+    rgba(0, 30, 154, 0.4) 0%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  bottom: -20%;
+  left: -20%;
+}
+
+.login-form {
+  width: 90%;
+  max-width: 800px;
+  padding: 2rem 1rem;
+  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 1.25rem;
+  text-align: center;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.container-register {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+}
+
+.auth-title {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #111928;
+  justify-content: center;
+}
+
+.auth-subtitle {
+  font-size: 1.25rem;
+  color: #585b7b;
+  margin-bottom: 2rem;
+}
+
+.btn-primary {
+  border-radius: 2rem;
+  background: #293881;
+  border: none;
+  margin-top: 5%;
+  width: 35%;
+  margin-left: 32%;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  text-align: left;
+  display: block;
+}
+
+a {
+  color: #143cad;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  margin-top: 1rem;
+  font-weight: bolder;
+}
+
+.katasandi {
+  color: #1f2a37;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: bolder;
+  line-height: 150%;
+  letter-spacing: -0.32px;
+}
+
+p {
+  font-size: 1.1rem;
+}
+
+a:hover {
+  color: #0056b3;
+}
+
+.modal-dialog {
+  max-width: 50rem;
+  margin: 1.75rem auto;
+}
+
+.modal-content {
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  border-bottom: none;
+  padding: 1rem;
+}
+
+.pupr-logo {
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+.modal-title {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.modal-body {
+  padding: 1rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.modal-body p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+.modal-footer {
+  justify-content: flex-end;
+  padding: 1rem;
+}
+
+#agreeButton {
+  width: 100%;
+  max-width: 200px;
+  margin-top: 1rem;
+  background-color: #1e3799;
+  border: none;
+  padding: 10px 30px;
+  font-size: 1rem;
+}
+
+#agreeButton:hover {
+  font-weight: bold;
+}
+
+.modal-body h5 {
+  margin-bottom: 15px;
+}
+
+.modal-body p {
+  margin-bottom: 15px;
+  font-size: 1rem;
+  text-align: justify;
+  hyphens: auto;
+  word-wrap: break-word;
+}
+
+.modal-body h6 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.modal-body a {
+  font-size: 1rem;
+}
+
+.modal-body a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.modal-body ul {
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.modal-body li {
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+.modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.modal-body::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+@media screen and (max-width: 768px) {
+  body,
+  html {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .container-register {
+    padding: 1rem;
+  }
+
+  .auth-title {
+    font-size: 1.75rem;
+  }
+
+  .auth-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .btn-primary {
+    width: 100%;
+    margin: 1rem auto;
+  }
+
+  .modal-dialog {
+    margin: 1rem;
+  }
+
+  .modal-body {
+    padding: 0.75rem;
+  }
+}
+
+#resetSuccessModal .modal-dialog,
+#emailSentModal .modal-dialog,
+#registerSuccessModal .modal-dialog,
+#registerErrorModal .modal-dialog {
+  display: flex;
+  align-items: center;
+  min-height: calc(100% - 1rem);
+}
+
+#resetSuccessModal .modal-content,
+#emailSentModal .modal-content,
+#registerSuccessModal .modal-content,
+#registerErrorModal .modal-content {
+  width: 55%;
+  max-width: 400px;
+  margin: 0 auto;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+#resetSuccessModal .modal-body,
+#emailSentModal .modal-body,
+#registerSuccessModal .modal-body,
+#registerErrorModal .modal-body {
+  padding: 2rem;
+  text-align: center;
+}
+
+#resetSuccessModal .modal-title,
+#emailSentModal .modal-title,
+#registerSuccessModal .modal-title,
+#registerErrorModal .modal-title {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+#resetSuccessModal p,
+#emailSentModal p,
+#registerSuccessModal p,
+#registerErrorModal p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 15px;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+#resetSuccessModal .btn-primary,
+#emailSentModal .btn-primary,
+#registerSuccessModal .btn-primary,
+#registerErrorModal .btn-primary {
+  width: 100%;
+  max-width: 200px;
+  margin-top: 1rem;
+  background-color: #293881;
+  border: none;
+  padding: 10px 30px;
+  font-size: 1rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#resetSuccessModal .btn-primary:hover,
+#emailSentModal .btn-primary:hover,
+#registerSuccessModal .btn-primary:hover,
+#registerErrorModal .btn-primary:hover {
+  font-weight: bold;
+}
+
+#resetSuccessModal .btn-close,
+#emailSentModal .btn-close,
+#registerSuccessModal .btn-close,
+#registerErrorModal .btn-close {
+  font-size: 0.8rem;
+}
+
+#registerErrorModal #registerErrorMessage {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+  #resetSuccessModal .modal-content,
+  #emailSentModal .modal-content,
+  #registerSuccessModal .modal-content,
+  #registerErrorModal .modal-content {
+    max-width: 90%;
+  }
+
+  #resetSuccessModal .modal-body,
+  #emailSentModal .modal-body,
+  #registerSuccessModal .modal-body,
+  #registerErrorModal .modal-body {
+    padding: 1.5rem;
+  }
+
+  #resetSuccessModal .modal-title,
+  #emailSentModal .modal-title,
+  #registerSuccessModal .modal-title,
+  #registerErrorModal .modal-title {
+    font-size: 1.3rem;
+  }
+
+  #resetSuccessModal p,
+  #emailSentModal p,
+  #registerSuccessModal p,
+  #registerErrorModal p {
+    font-size: 0.9rem;
+  }
+
+  #resetSuccessModal .btn-primary,
+  #emailSentModal .btn-primary,
+  #registerSuccessModal .btn-primary,
+  #registerErrorModal .btn-primary {
+    width: 100%;
+    margin: 1rem auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body,
+  html {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .container-register {
+    padding: 0.5rem;
+  }
+
+  .auth-title {
+    font-size: 1.5rem;
+  }
+
+  .form-control {
+    padding: 0.75rem;
+  }
+
+  .btn-primary {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+    margin: 0.5rem auto;
+  }
+
+  .modal-title {
+    font-size: 1.25rem;
+  }
+
+  .modal-body p,
+  .modal-body li {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  .container-register {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    justify-content: flex-start;
+  }
+
+  .login-form {
+    margin-bottom: 1rem;
+  }
+
+  .btn-primary {
+    margin: 0.5rem auto;
+  }
+}
