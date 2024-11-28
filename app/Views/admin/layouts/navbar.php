@@ -146,6 +146,7 @@ $uri1 = $uri[1] ?? 'index';
                 class="kembali" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="row">
+                        <input type="hidden" id="kendaraan_id_hidden" name="kendaraan_id" value="">
 
                         <div class="col-md-6">
                             <div class="form-group mb-3">
@@ -188,7 +189,7 @@ $uri1 = $uri[1] ?? 'index';
                                 <select class="form-control" id="kendaraan_id_kembali" name="kendaraan_id" required>
                                     <option value="" disabled selected>Kendaraan</option>
                                 </select>
-                                <input type="hidden" id="kendaraan_id_hidden" name="kendaraan_id">
+                                <!-- <input type="hidden" id="kendaraan_id_hidden" name="kendaraan_id"> -->
                             </div>
 
                             <div class="form-group mb-3">
@@ -269,15 +270,32 @@ $uri1 = $uri[1] ?? 'index';
                             </div>
 
                             <div class="form-group mb-3">
-                                <label for="unit_organisasi">Unit Organisasi</label>
-                                <input type="text" class="form-control" id="unit_organisasi" name="unit_organisasi"
-                                    required>
+                                <label for="jabatan">Pilih Unit Organisasi</label>
+                                <select
+                                    class="form-control <?php if (session('errors.unit_organisasi')): ?>is-invalid<?php endif ?>"
+                                    name="unit_organisasi">
+                                    <option value="" class="text-muted" disabled selected></option>
+                                    <option value="Setjen">Sekretariat Jenderal</option>
+                                    <option value="Itjen">Inspektorat Jenderal</option>
+                                    <option value="Ditjen Sumber Daya Air">Direktorat Jenderal Sumber Daya Air</option>
+                                    <option value="Ditjen Bina Marga">Direktorat Jenderal Bina Marga</option>
+                                    <option value="Ditjen Cipta Karya">Direktorat Jenderal Cipta Karya</option>
+                                    <option value="Ditjen Perumahan">Direktorat Jenderal Perumahan</option>
+                                    <option value="Ditjen Bina Konstruksi">Direktorat Jenderal Bina Konstruksi</option>
+                                    <option value="Ditjen Pembiayaan Infrastruktur Pekerjaan Umum dan Perumahan">
+                                        Direktorat
+                                        Jenderal Pembiayaan Infrastruktur Pekerjaan Umum dan
+                                        Perumahan</option>
+                                    <option value="BPIW">Badan Pengembangan Infrastruktur Wilayah</option>
+                                    <option value="BPSDM">Badan Pengembangan Sumber Daya Manusia</option>
+                                    <option value="BPJT">Badan Pengatur Jalan Tol</option>
+                                </select>
                             </div>
-                            <div class="form-group mb-3">
+                            <!-- <div class="form-group mb-3">
                                 <label for="surat_jalan">Surat Jalan (PDF)</label>
                                 <input type="file" class="form-control" id="surat_jalan" name="surat_jalan"
                                     accept="application/pdf" required>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="col-md-6">
@@ -310,7 +328,7 @@ $uri1 = $uri[1] ?? 'index';
                                     required>
                             </div>
 
-                            <div class="form-group mb-3">
+                            <!-- <div class="form-group mb-3">
                                 <label for="surat_pemakaian">Surat Pemakaian (PDF)</label>
                                 <input type="file" class="form-control" id="surat_pemakaian" name="surat_pemakaian"
                                     accept="application/pdf" required>
@@ -319,13 +337,21 @@ $uri1 = $uri[1] ?? 'index';
                                 <label for="berita_acara_penyerahan">Berita Acara Penyerahan (PDF)</label>
                                 <input type="file" class="form-control" id="berita_acara_penyerahan"
                                     name="berita_acara_penyerahan" accept="application/pdf" required>
-                            </div>
+                            </div> -->
                         </div>
+
 
                         <div class="form-group mb-3 mt-auto order-last">
                             <label for="urusan_kedinasan">Urusan Kedinasan</label>
                             <textarea class="form-control" id="urusan_kedinasan" name="urusan_kedinasan" rows="3"
                                 required></textarea>
+                        </div>
+
+                        <div class="form-group mb-3 mt-auto order-last">
+                            <label for="surat_permohonan">Surat Permohonan (PDF)</label>
+                            <input type="file" class="form-control" id="surat_permohonan" name="surat_permohonan"
+                                accept="application/pdf" required>
+                            <small class="text-muted">Upload surat permohonan peminjaman kendaraan</small>
                         </div>
 
                     </div>

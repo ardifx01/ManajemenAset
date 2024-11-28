@@ -124,27 +124,19 @@
                                     <?php if (in_groups('admin')): ?>
                                         <div class="mt-3">
                                             <h6 class="mb-2">Dokumen Peminjaman:</h6>
-                                            <?php if (!empty($item['surat_jalan']) && file_exists(ROOTPATH . 'public/uploads/documents/' . $item['surat_jalan'])): ?>
-                                                <a href="<?= base_url('/uploads/documents/' . $item['surat_jalan']) ?>" target="_blank"
-                                                    class="btn btn-sm btn-outline-primary mb-1">
+                                            <?php if (!empty($item['surat_permohonan']) && file_exists(ROOTPATH . 'public/uploads/documents/' . $item['surat_permohonan'])): ?>
+                                                <a href="<?= base_url('/uploads/documents/' . $item['surat_permohonan']) ?>"
+                                                    target="_blank" class="btn btn-sm btn-outline-primary mb-1">
+                                                    <i class="bi bi-file-earmark-pdf"></i> Surat Permohonan
+                                                </a>
+                                            <?php endif; ?>
+
+                                            <?php if (!empty($item['surat_jalan_admin']) && file_exists(ROOTPATH . 'public/uploads/documents/' . $item['surat_jalan_admin'])): ?>
+                                                <a href="<?= base_url('/uploads/documents/' . $item['surat_jalan_admin']) ?>"
+                                                    target="_blank" class="btn btn-sm btn-outline-primary mb-1">
                                                     <i class="bi bi-file-earmark-pdf"></i> Surat Jalan
                                                 </a>
                                             <?php endif; ?>
-
-                                            <?php if (!empty($item['surat_pemakaian']) && file_exists(ROOTPATH . 'public/uploads/documents/' . $item['surat_pemakaian'])): ?>
-                                                <a href="<?= base_url('/uploads/documents/' . $item['surat_pemakaian']) ?>"
-                                                    target="_blank" class="btn btn-sm btn-outline-primary mb-1">
-                                                    <i class="bi bi-file-earmark-pdf"></i> Surat Pemakaian
-                                                </a>
-                                            <?php endif; ?>
-
-                                            <?php if (!empty($item['berita_acara_penyerahan']) && file_exists(ROOTPATH . 'public/uploads/documents/' . $item['berita_acara_penyerahan'])): ?>
-                                                <a href="<?= base_url('/uploads/documents/' . $item['berita_acara_penyerahan']) ?>"
-                                                    target="_blank" class="btn btn-sm btn-outline-primary mb-1">
-                                                    <i class="bi bi-file-earmark-pdf"></i> Berita Acara
-                                                </a>
-                                            <?php endif; ?>
-
                                             <button type="button" class="btn btn-danger btn-sm mt-2"
                                                 onclick="deleteAset('<?= $item['id'] ?>')">
                                                 <i class="bi bi-trash"></i> Hapus

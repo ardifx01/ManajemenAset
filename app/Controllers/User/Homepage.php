@@ -59,9 +59,9 @@ class Homepage extends BaseController
             $pinjamData = $latestPinjamMap[$asset['id']] ?? null;
             $kembaliData = $latestKembaliMap[$asset['id']] ?? null;
 
-            $asset['surat_jalan'] = null;
-            $asset['surat_pemakaian'] = null;
-            $asset['berita_acara_penyerahan'] = null;
+            // Inisialisasi field baru
+            $asset['surat_permohonan'] = null;
+            $asset['surat_jalan_admin'] = null;
             $asset['tanggal_kembali'] = null;
 
             if ($pinjamData && $kembaliData) {
@@ -78,9 +78,8 @@ class Homepage extends BaseController
                             break;
                         case 'ditolak':
                             $asset['status_pinjam'] = 'Dipinjam';
-                            $asset['surat_jalan'] = $pinjamData['surat_jalan'];
-                            $asset['surat_pemakaian'] = $pinjamData['surat_pemakaian'];
-                            $asset['berita_acara_penyerahan'] = $pinjamData['berita_acara_penyerahan'];
+                            $asset['surat_permohonan'] = $pinjamData['surat_permohonan'];
+                            $asset['surat_jalan_admin'] = $pinjamData['surat_jalan_admin'];
                             $asset['tanggal_kembali'] = $pinjamData['tanggal_kembali'];
                             break;
                     }
@@ -107,7 +106,6 @@ class Homepage extends BaseController
 
         return view('user/homepage', ['aset' => $assets]);
     }
-
     private function setPinjamStatus(&$asset, $pinjamData)
     {
         switch ($pinjamData['status']) {
@@ -116,9 +114,8 @@ class Homepage extends BaseController
                 break;
             case 'disetujui':
                 $asset['status_pinjam'] = 'Dipinjam';
-                $asset['surat_jalan'] = $pinjamData['surat_jalan'];
-                $asset['surat_pemakaian'] = $pinjamData['surat_pemakaian'];
-                $asset['berita_acara_penyerahan'] = $pinjamData['berita_acara_penyerahan'];
+                $asset['surat_permohonan'] = $pinjamData['surat_permohonan'];
+                $asset['surat_jalan_admin'] = $pinjamData['surat_jalan_admin'];
                 $asset['tanggal_kembali'] = $pinjamData['tanggal_kembali'];
                 break;
             default:

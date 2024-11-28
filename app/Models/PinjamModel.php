@@ -26,15 +26,15 @@ class PinjamModel extends Model
         'pangkat_golongan',
         'jabatan',
         'unit_organisasi',
-        'surat_jalan',
-        'surat_pemakaian',
-        'berita_acara_penyerahan',
+        'surat_permohonan',
+        'surat_jalan_admin',
         'pengemudi',
         'no_hp',
         'tanggal_pinjam',
         'tanggal_kembali',
         'urusan_kedinasan',
         'status',
+        'is_returned',
         'keterangan',
         'created_at',
         'updated_at',
@@ -52,6 +52,16 @@ class PinjamModel extends Model
         'kendaraan_id' => 'required'
         // 'status' => 'in_list[pending,disetujui,ditolak]'
     ];
+    // protected $casts = [
+    //     'is_returned' => 'boolean'
+    // ];
+    public function updateReturnStatus($id, $isReturned = true)
+    {
+        $builder = $this->db->table($this->table);
+        return $builder->where('id', $id)
+            ->set('is_returned', (bool) $isReturned, true)
+            ->update();
+    }
     public function getPeminjamanHistory($userId = null)
     {
         $builder = $this->select('pinjam.*, assets.merk, assets.no_polisi')
@@ -79,6 +89,7 @@ class PinjamModel extends Model
     {
         return $this->where('kendaraan_id', $kendaraanId)
             ->whereIn('status', [self::STATUS_DISETUJUI, self::STATUS_PENDING])
+            ->where('is_returned', false)
             ->where('deleted_at', null)
             ->first();
     }
@@ -100,4 +111,31 @@ class PinjamModel extends Model
         return $builder->orderBy('pinjam.created_at', 'DESC')
             ->findAll();
     }
+    public function canBorrow($kendaraanId)
+    {
+        return !$this->where('kendaraan_id', $kendaraanId)
+            ->whereIn('status', [self::STATUS_PENDING, self::STATUS_DISETUJUI])
+            ->where('is_returned', false)
+            ->where('deleted_at', null)
+            ->first();
+    }
+    public function getActiveUserPeminjaman($userId)
+    {
+        return $this->where('user_id', $userId)
+            ->whereIn('status', [self::STATUS_DISETUJUI, self::STATUS_PENDING])
+            ->where('is_returned', false)
+            ->where('deleted_at', null)
+            ->findAll();
+    }
+    // public function updateStatus($id, $isReturned = true)
+    // {
+    //     if (!$this->find($id)) {
+    //         return false;
+    //     }
+
+    //     $builder = $this->db->table($this->table);
+    //     return $builder->where('id', $id)
+    //         ->set(['is_returned' => $isReturned])
+    //         ->update();
+    // }
 }

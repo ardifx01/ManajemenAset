@@ -59,24 +59,17 @@
                                             <?php endif; ?>
                                         </td>
                                         <td>
-                                            <?php if (!empty($pinjam['surat_jalan'])): ?>
-                                                <a href="<?= base_url('/uploads/documents/' . $pinjam['surat_jalan']) ?>"
+                                            <?php if (!empty($pinjam['surat_permohonan'])): ?>
+                                                <a href="<?= base_url('/uploads/documents/' . $pinjam['surat_permohonan']) ?>"
+                                                    target="_blank" class="btn btn-sm btn-outline-primary mb-1">
+                                                    <i class="bi bi-file-earmark-pdf"></i> Surat Permohonan
+                                                </a>
+                                            <?php endif; ?>
+
+                                            <?php if (!empty($pinjam['surat_jalan_admin']) && $pinjam['status'] === 'disetujui'): ?>
+                                                <a href="<?= base_url('/uploads/documents/' . $pinjam['surat_jalan_admin']) ?>"
                                                     target="_blank" class="btn btn-sm btn-outline-primary mb-1">
                                                     <i class="bi bi-file-earmark-pdf"></i> Surat Jalan
-                                                </a>
-                                            <?php endif; ?>
-
-                                            <?php if (!empty($pinjam['surat_pemakaian'])): ?>
-                                                <a href="<?= base_url('/uploads/documents/' . $pinjam['surat_pemakaian']) ?>"
-                                                    target="_blank" class="btn btn-sm btn-outline-primary mb-1">
-                                                    <i class="bi bi-file-earmark-pdf"></i> Surat Pemakaian
-                                                </a>
-                                            <?php endif; ?>
-
-                                            <?php if (!empty($pinjam['berita_acara_penyerahan'])): ?>
-                                                <a href="<?= base_url('/uploads/documents/' . $pinjam['berita_acara_penyerahan']) ?>"
-                                                    target="_blank" class="btn btn-sm btn-outline-primary mb-1">
-                                                    <i class="bi bi-file-earmark-pdf"></i> Berita Acara
                                                 </a>
                                             <?php endif; ?>
                                         </td>

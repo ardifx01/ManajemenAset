@@ -3,8 +3,8 @@
 <?= $this->section('content') ?>
 
 <title>Login</title>
-
-<div class="container-login">
+<div class="asset-grid"></div>
+<div class="login-form">
 
     <h1 class="auth-title text-center">Masuk</h1>
     <p class="auth-subtitle mb-5">Silahkan masukkan email atau username dan kata sandi Anda</p>
@@ -64,12 +64,12 @@
         <?php endif; ?>
     </form>
 
-    <?php if ($config->allowRegistration): ?>
+    <!-- <?php if ($config->allowRegistration): ?>
         <div class="text-center mt-5 text-lg">
             <p class="text-gray-600">Belum punya akun? <a class="register" href="<?= base_url('register') ?>">Buat Akun</a>
             </p>
         </div>
-    <?php endif; ?>
+    <?php endif; ?> -->
 </div>
 
 <?= $this->endSection() ?>

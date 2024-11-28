@@ -133,7 +133,7 @@
                                                 <th>Penanggung Jawab</th>
                                                 <th>Kendaraan</th>
                                                 <th>Status</th>
-                                                <th>Dokumen</th>
+                                                <th>Surat Permohonan</th>
                                                 <th>Tanggal Pinjam</th>
                                                 <th>Tanggal Kembali</th>
                                                 <th>Aksi</th>
@@ -149,24 +149,10 @@
                                                         <span class="badge bg-warning">Pending</span>
                                                     </td>
                                                     <td>
-                                                        <?php if (!empty($pinjam['surat_jalan'])): ?>
-                                                            <a href="<?= base_url('/uploads/documents/' . $pinjam['surat_jalan']) ?>"
+                                                        <?php if (!empty($pinjam['surat_permohonan'])): ?>
+                                                            <a href="<?= base_url('/uploads/documents/' . $pinjam['surat_permohonan']) ?>"
                                                                 target="_blank" class="btn btn-sm btn-outline-primary mb-1">
-                                                                <i class="bi bi-file-earmark-pdf"></i> Surat Jalan
-                                                            </a>
-                                                        <?php endif; ?>
-
-                                                        <?php if (!empty($pinjam['surat_pemakaian'])): ?>
-                                                            <a href="<?= base_url('/uploads/documents/' . $pinjam['surat_pemakaian']) ?>"
-                                                                target="_blank" class="btn btn-sm btn-outline-primary mb-1">
-                                                                <i class="bi bi-file-earmark-pdf"></i> Surat Pemakaian
-                                                            </a>
-                                                        <?php endif; ?>
-
-                                                        <?php if (!empty($pinjam['berita_acara_penyerahan'])): ?>
-                                                            <a href="<?= base_url('/uploads/documents/' . $pinjam['berita_acara_penyerahan']) ?>"
-                                                                target="_blank" class="btn btn-sm btn-outline-primary mb-1">
-                                                                <i class="bi bi-file-earmark-pdf"></i> Berita Acara
+                                                                <i class="bi bi-file-earmark-pdf"></i> Surat Permohonan
                                                             </a>
                                                         <?php endif; ?>
                                                     </td>
@@ -174,7 +160,7 @@
                                                     <td><?= $pinjam['tanggal_kembali'] ?></td>
                                                     <td>
                                                         <button class="btn btn-sm btn-success"
-                                                            onclick="verifikasiPeminjaman(<?= $pinjam['id'] ?>, 'disetujui')">
+                                                            onclick="showSetujuModal(<?= $pinjam['id'] ?>)">
                                                             Setujui
                                                         </button>
                                                         <button class="btn btn-sm btn-danger"
@@ -259,6 +245,32 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSetuju" tabindex="-1" aria-labelledby="modalSetujuLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalSetujuLabel">Upload Surat Jalan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="formSetuju" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" id="pinjamId" name="pinjam_id">
+                    <div class="mb-3">
+                        <label for="surat_jalan_admin" class="form-label">Surat Jalan (PDF)</label>
+                        <input type="file" class="form-control" id="surat_jalan_admin" name="surat_jalan_admin"
+                            accept="application/pdf" required>
+                        <small class="text-muted">Upload surat jalan yang telah disetujui</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Setujui Peminjaman</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

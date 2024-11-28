@@ -34,12 +34,31 @@ class AsetModel extends Model
         'updated_at',
         'deleted_at',
     ];
+    const STATUS_TERSEDIA = 'Tersedia';
+    const STATUS_DIPINJAM = 'Dipinjam';
+    const STATUS_VERIFIKASI = 'Dalam Verifikasi';
+    const STATUS_VERIFIKASI_PENGEMBALIAN = 'Dalam Verifikasi Pengembalian';
+
     public function isAvailable($kendaraanId)
     {
         $result = $this->select('status_pinjam')
             ->where('id', $kendaraanId)
+            ->where('deleted_at', null)
             ->first();
 
-        return $result && $result['status_pinjam'] === 'Tersedia';
+        return $result && $result['status_pinjam'] === self::STATUS_TERSEDIA;
+    }
+    public function updateStatus($id, $status)
+    {
+        $data = ['status_pinjam' => $status];
+
+        if (!$this->find($id)) {
+            return false;
+        }
+
+        $builder = $this->db->table($this->table);
+        return $builder->where('id', $id)
+            ->set($data)
+            ->update();
     }
 }

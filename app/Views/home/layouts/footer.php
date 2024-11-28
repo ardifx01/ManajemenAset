@@ -3,8 +3,8 @@
         <div class="footer-content">
             <div class="left-section">
                 <div class="logo-container-ft">
-                    <img src="../assets2/img/logofooter2.png" alt="Logo Kementerian PUPR">
-                    <span class="logo-container-txt">KEMENTERIAN PEKERJAAN UMUM DAN PERUMAHAN RAKYAT</span>
+                    <img src="../assets2/img/logofooter2.png" alt="Logo Kementerian PU">
+                    <span class="logo-container-txt">KEMENTERIAN PEKERJAAN UMUM</span>
                 </div>
                 <div class="map-container">
                     <iframe
@@ -17,20 +17,20 @@
                 <div class="col">
                     <h3>Ikuti Kami</h3>
                     <ul class="social-icons">
-                        <li><a href="https://x.com/KemenPU" target="_blank"><i class="bi bi-twitter"></i> X PUPR</a>
+                        <li><a href="https://x.com/KemenPU" target="_blank"><i class="bi bi-twitter"></i> X PU</a>
                         </li>
                         <li><a href="https://www.instagram.com/kemenpupr/" target="_blank"><i
-                                    class="bi bi-instagram"></i> Instagram PUPR</a></li>
+                                    class="bi bi-instagram"></i> Instagram PU</a></li>
                         <!-- <li><a href="#"><i class="bi bi-facebook"></i> Facebook PUPR</a></li> -->
                         <li><a href="https://www.youtube.com/@KemenPUPR" target="_blank"><i class="bi bi-youtube"></i>
-                                YouTube PUPR</a></li>
+                                YouTube PU</a></li>
                     </ul>
                 </div>
                 <div class="col">
                     <h3>Tautan Lainnya</h3>
                     <ul>
-                        <li><a href="https://pu.go.id/" target="_blank">Website Kementerian PUPR</a></li>
-                        <li><a href="https://pupr-ai.web.app/" target="_blank">ChatBOT PUPR</a></li>
+                        <li><a href="https://pu.go.id/" target="_blank">Website Kementerian PU</a></li>
+                        <li><a href="https://pupr-ai.web.app/" target="_blank">ChatBOT PU</a></li>
                     </ul>
                 </div>
                 <div class="col">
@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="copyright">
-            <p>Hak Cipta © Kementerian Pekerjaan Umum dan Perumahan Rakyat. All Rights Reserved</p>
+            <p>Hak Cipta © Kementerian Pekerjaan Umum. All Rights Reserved</p>
         </div>
     </div>
 </footer>

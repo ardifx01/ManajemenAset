@@ -1,4 +1,56 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const formSetuju = document.getElementById('formSetuju');
+    if (formSetuju) {
+        formSetuju.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            Swal.fire({
+                title: 'Mohon Tunggu',
+                text: 'Sedang memproses verifikasi...',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            let formData = new FormData(this);
+            formData.append('status', 'disetujui');
+            
+            fetch(`${BASE_URL}/AsetKendaraan/verifikasiPeminjaman`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil!',
+                        text: data.message,
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#198754'
+                    }).then(() => {
+                        $('#modalSetuju').modal('hide');
+                        location.reload();
+                    });
+                } else {
+                    throw new Error(data.error || 'Terjadi kesalahan saat verifikasi');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal!',
+                    text: error.message || 'Terjadi kesalahan saat verifikasi',
+                    confirmButtonText: 'Tutup',
+                    confirmButtonColor: '#dc3545'
+                });
+            });
+        });
+    }
+    
     const formTambahAset = document.getElementById('formTambahAset');
     if (formTambahAset) {
         formTambahAset.addEventListener('submit', handleTambahAsetSubmit);
@@ -15,94 +67,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const formPeminjaman = document.getElementById('formPeminjaman');
     if (formPeminjaman) {
         formPeminjaman.addEventListener('submit', handlePeminjamanSubmit);
-        
-        // const modalPeminjaman = document.getElementById('modalPeminjaman');
-        // if (modalPeminjaman) {
-        //     modalPeminjaman.addEventListener('show.bs.modal', loadKendaraanPinjam);
-        // }
     }
 
     const formPengembalian = document.getElementById('formPengembalian');
     if (formPengembalian) {
-        formPengembalian.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const kendaraanId = document.getElementById('kendaraan_id_hidden')?.value || 
-                               document.getElementById('kendaraan_id_kembali')?.value;
-                               
-            if (!kendaraanId) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Data kendaraan tidak valid',
-                    confirmButtonText: 'Tutup',
-                    confirmButtonColor: '#dc3545'
-                });
-                return;
-            }
-
-            Swal.fire({
-                title: 'Mohon Tunggu',
-                text: 'Sedang memproses data dan memeriksa keamanan file...',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                showConfirmButton: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            });
-
-            fetch(this.action, {
-                method: 'POST',
-                body: new FormData(this)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    if (data.error.includes('terdeteksi tidak aman')) {
-                        showFileUnsafeModal(data.error);
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal!',
-                            text: data.error,
-                            confirmButtonText: 'Tutup',
-                            confirmButtonColor: '#dc3545'
-                        });
-                    }
-                } else if (data.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil!',
-                        text: 'Pengajuan pengembalian berhasil dikirim. Mohon tunggu verifikasi.',
-                        confirmButtonText: 'OK',
-                        confirmButtonColor: '#198754'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            this.reset();
-                            const modal = bootstrap.Modal.getInstance(document.getElementById('modalPengembalian'));
-                            modal.hide();
-                            window.location.reload();
-                        }
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Terjadi Kesalahan!',
-                    text: 'Gagal menghubungi server. Silakan coba lagi.',
-                    confirmButtonText: 'Tutup',
-                    confirmButtonColor: '#dc3545'
-                });
-            });
-        });
-
-        const modalPengembalian = document.getElementById('modalPengembalian');
-        if (modalPengembalian) {
-            modalPengembalian.addEventListener('show.bs.modal', loadKendaraanKembali);
-        }
+        formPengembalian.removeEventListener('submit', handlePengembalianSubmit);
+        formPengembalian.addEventListener('submit', handlePengembalianSubmit);
+    }
+    
+    const modalPengembalian = document.getElementById('modalPengembalian');
+    if (modalPengembalian) {
     }
 
     const formEditAset = document.getElementById('formEditAset');
@@ -110,6 +84,116 @@ document.addEventListener('DOMContentLoaded', function() {
         formEditAset.addEventListener('submit', handleEditAsetSubmit);
     }
 });
+
+function handlePengembalianSubmit(e) {
+    e.preventDefault();
+    
+    const kendaraanId = document.getElementById('kendaraan_id_hidden')?.value;
+    if (!kendaraanId) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Data kendaraan tidak valid',
+            confirmButtonText: 'Tutup',
+            confirmButtonColor: '#dc3545'
+        });
+        return;
+    }
+
+    const requiredFields = [
+        'nama_penanggung_jawab', 
+        'nip_nrp',
+        'pangkat_golongan',
+        'jabatan',
+        'unit_organisasi',
+        'tanggal_kembali',
+        'surat_pengembalian',
+        'berita_acara_pengembalian'
+    ];
+
+    for (const field of requiredFields) {
+        const input = e.target.querySelector(`[name="${field}"]`);
+        if (!input?.value) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: `Field ${field.replace(/_/g, ' ')} harus diisi`,
+                confirmButtonText: 'Tutup',
+                confirmButtonColor: '#dc3545'
+            });
+            return;
+        }
+    }
+
+    Swal.fire({
+        title: 'Mohon Tunggu',
+        text: 'Sedang memproses data...',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    const formData = new FormData(e.target);
+    
+    console.log('Submitting form data:', {
+        kendaraanId: kendaraanId,
+        formValues: Object.fromEntries(formData)
+    });
+
+    fetch(e.target.action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.error) {
+            if (data.error.includes('terdeteksi tidak aman')) {
+                showFileUnsafeModal(data.error);
+            } else {
+                throw new Error(data.error);
+            }
+        }
+        
+        if (data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Pengajuan pengembalian berhasil dikirim',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#198754'
+            }).then(() => {
+                e.target.reset();
+                const modal = bootstrap.Modal.getInstance(document.getElementById('modalPengembalian'));
+                if (modal) modal.hide();
+                window.location.reload();
+            });
+        } else {
+            throw new Error('Terjadi kesalahan saat memproses data');
+        }
+    })
+    .catch(error => {
+        console.error('Error in form submission:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: error.message || 'Terjadi kesalahan saat mengirim data',
+            confirmButtonText: 'Tutup',
+            confirmButtonColor: '#dc3545'
+        });
+    });
+}
+
+function showSetujuModal(pinjamId) {
+    $('#pinjamId').val(pinjamId);
+    $('#modalSetuju').modal('show');
+}
 
 function openEditModal(id) {
     if (!id) {
@@ -382,17 +466,21 @@ function submitPenolakan() {
 }
 
 function verifikasiPeminjaman(id, status, keterangan = '') {
+    const formData = new FormData();
+    formData.append('pinjam_id', id);
+    formData.append('status', status);
+    formData.append('keterangan', keterangan);
+
+    if (status === 'disetujui') {
+        const suratJalanInput = document.querySelector('#surat_jalan_admin');
+        if (suratJalanInput && suratJalanInput.files[0]) {
+            formData.append('surat_jalan_admin', suratJalanInput.files[0]);
+        }
+    }
+
     fetch(`${window.location.origin}/AsetKendaraan/verifikasiPeminjaman`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: new URLSearchParams({
-            'pinjam_id': id,
-            'status': status,
-            'keterangan': keterangan
-        })
+        body: formData
     })
     .then(response => response.json())
     .then(data => {
@@ -422,25 +510,51 @@ function verifikasiPeminjaman(id, status, keterangan = '') {
 }
 
 function verifikasiPengembalian(id, status, keterangan = '') {
+    Swal.fire({
+        title: 'Mohon Tunggu',
+        text: 'Sedang memproses verifikasi pengembalian...',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    const headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-Requested-With': 'XMLHttpRequest'
+    };
+
+    const formData = new URLSearchParams({
+        'kembali_id': id,
+        'status': status,
+        'keterangan': keterangan
+    });
+
+    const timeout = 30000;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+
     fetch(`${window.location.origin}/AsetKendaraan/verifikasiPengembalian`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: new URLSearchParams({
-            'kembali_id': id,
-            'status': status,
-            'keterangan': keterangan
-        })
+        headers: headers,
+        body: formData,
+        signal: controller.signal
     })
-    .then(response => response.json())
+    .then(response => {
+        clearTimeout(timeoutId);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.success) {
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil!',
-                text: 'Verifikasi berhasil dilakukan',
+                text: 'Verifikasi pengembalian berhasil dilakukan',
                 confirmButtonText: 'OK',
                 confirmButtonColor: '#198754'
             }).then(() => {
@@ -451,10 +565,13 @@ function verifikasiPengembalian(id, status, keterangan = '') {
         }
     })
     .catch(error => {
+        console.error('Error:', error);
         Swal.fire({
             icon: 'error',
             title: 'Gagal!',
-            text: error.message || 'Terjadi kesalahan saat verifikasi',
+            text: error.message === 'The user aborted a request.' 
+                ? 'Waktu permintaan habis. Silakan coba lagi.' 
+                : (error.message || 'Terjadi kesalahan saat verifikasi'),
             confirmButtonText: 'Tutup',
             confirmButtonColor: '#dc3545'
         });
@@ -560,49 +677,63 @@ function loadKendaraanPinjam() {
 }
 
 function openPengembalianModal(kendaraanId) {
-    $('#formPengembalian')[0].reset();
+    const form = document.getElementById('formPengembalian');
+    if (form) form.reset();
     
-    $.ajax({
-        url: '/AsetKendaraan/getPeminjamanData/' + kendaraanId,
-        method: 'GET',
-        success: function(response) {
+    console.log('Loading data for kendaraan:', kendaraanId);
+    
+    fetch(`/AsetKendaraan/getPeminjamanData/${kendaraanId}`)
+        .then(response => response.json())
+        .then(response => {
             if (response.error) {
-                alert(response.error);
-                return;
+                throw new Error(response.error);
             }
             
-            $('#formPengembalian #nama_penanggung_jawab').val(response.nama_penanggung_jawab);
-            $('#formPengembalian #nip_nrp').val(response.nip_nrp);
-            $('#formPengembalian #pangkat_golongan').val(response.pangkat_golongan);
-            $('#formPengembalian #jabatan').val(response.jabatan);
-            $('#formPengembalian #unit_organisasi').val(response.unit_organisasi);
-            $('#formPengembalian #kendaraan_id_hidden').val(response.kendaraan_id);
-            $('#formPengembalian #pengemudi').val(response.pengemudi);
-            $('#formPengembalian #no_hp').val(response.no_hp);
+            document.getElementById('kendaraan_id_hidden').value = kendaraanId;
             
-            const tanggalPinjam = response.tanggal_pinjam.split('T')[0];
-            $('#formPengembalian #tanggal_pinjam').val(tanggalPinjam);
+            const fields = [
+                'nama_penanggung_jawab', 'nip_nrp', 'pangkat_golongan',
+                'jabatan', 'unit_organisasi', 'pengemudi', 'no_hp'
+            ];
             
-            $('#formPengembalian #tanggal_pinjam').prop('readonly', true);
+            fields.forEach(field => {
+                const input = document.getElementById(field);
+                if (input && response[field]) {
+                    input.value = response[field];
+                }
+            });
             
-            const kendaraanOption = new Option(
-                response.merk + ' - ' + response.no_polisi, 
-                response.kendaraan_id, 
-                true, 
-                true
-            );
-            $('#kendaraan_id_kembali').empty().append(kendaraanOption);
+            if (response.tanggal_pinjam) {
+                const tanggalPinjam = response.tanggal_pinjam.split('T')[0];
+                document.getElementById('tanggal_pinjam').value = tanggalPinjam;
+            }
             
-            $('#modalPengembalian').modal('show');
-        },
-        error: function(xhr, status, error) {
-            alert('Terjadi kesalahan: ' + error);
-        }
-    });
-}
-
-function loadKendaraanKembali() {
-    console.log('Kendaraan loading handled by openPengembalianModal');
+            const kendaraanSelect = document.getElementById('kendaraan_id_kembali');
+            if (kendaraanSelect) {
+                kendaraanSelect.innerHTML = '';
+                const option = new Option(
+                    `${response.merk} - ${response.no_polisi}`,
+                    kendaraanId,
+                    true,
+                    true
+                );
+                kendaraanSelect.appendChild(option);
+            }
+            
+            const modal = new bootstrap.Modal(document.getElementById('modalPengembalian'));
+            modal.show();
+            
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: error.message || 'Gagal memuat data kendaraan',
+                confirmButtonText: 'Tutup',
+                confirmButtonColor: '#dc3545'
+            });
+        });
 }
 
 function loadKendaraanData() {

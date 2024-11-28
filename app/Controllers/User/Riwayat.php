@@ -189,9 +189,10 @@ class Riwayat extends BaseController
 
         if ($type === 'peminjaman') {
             $documents = [
-                'surat_jalan' => 'Surat Jalan',
-                'surat_pemakaian' => 'Surat Pemakaian',
-                'berita_acara_penyerahan' => 'Berita Acara Penyerahan'
+                'surat_permohonan' => 'Surat Permohonan',
+                'surat_jalan_admin' => 'Surat Jalan'
+                // 'surat_pemakaian' => 'Surat Pemakaian',
+                // 'berita_acara_penyerahan' => 'Berita Acara Penyerahan'
             ];
         } else {
             $documents = [

@@ -27,6 +27,7 @@ class KembaliModel extends Model
         'surat_pengembalian',
         'berita_acara_pengembalian',
         'kendaraan_id',
+        'pinjam_id',
         'no_hp',
         'tanggal_pinjam',
         'tanggal_kembali',
@@ -45,8 +46,16 @@ class KembaliModel extends Model
     protected $validationRules = [
         'user_id' => 'required',
         'kode_barang' => 'required',
-        'kendaraan_id' => 'required'
-        // 'status' => 'in_list[pending,disetujui,ditolak]'
+        'kendaraan_id' => 'required',
+        'nama_penanggung_jawab' => 'required',
+        'nip_nrp' => 'required',
+        'pangkat_golongan' => 'required',
+        'jabatan' => 'required',
+        'unit_organisasi' => 'required',
+        'no_hp' => 'required',
+        'tanggal_pinjam' => 'required',
+        'tanggal_kembali' => 'required',
+        'pinjam_id' => 'required'
     ];
     public function getPengembalianHistory($userId = null)
     {
@@ -58,12 +67,13 @@ class KembaliModel extends Model
                 pinjam.status as status_pinjam
             ')
             ->join('assets', 'assets.id = kembali.kendaraan_id')
-            ->join('pinjam', 'pinjam.kendaraan_id = kembali.kendaraan_id', 'left');
+            ->join('pinjam', 'pinjam.id = kembali.pinjam_id', 'left');
 
         if ($userId) {
             $builder->where('kembali.user_id', $userId);
         }
-        return $builder->orderBy('kembali.created_at', 'DESC')
+        return $builder->where('kembali.deleted_at', null)
+            ->orderBy('kembali.created_at', 'DESC')
             ->findAll();
     }
 
@@ -76,7 +86,7 @@ class KembaliModel extends Model
                 pinjam.urusan_kedinasan
             ')
             ->join('assets', 'assets.id = kembali.kendaraan_id')
-            ->join('pinjam', 'pinjam.kendaraan_id = kembali.kendaraan_id', 'left')
+            ->join('pinjam', 'pinjam.id = kembali.pinjam_id', 'left')
             ->where('kembali.status', self::STATUS_PENDING)
             ->where('kembali.deleted_at', null)
             ->orderBy('kembali.created_at', 'DESC')

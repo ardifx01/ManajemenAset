@@ -14,10 +14,10 @@
 
 <body>
 
-    <div class="blue-gradient-rg"></div>
+    <!-- <div class="blue-gradient-rg"></div>
     <div class="yellow-gradient-rg"></div>
     <div class="yellow-gradient-lf"></div>
-    <div class="blue-gradient-lf"></div>
+    <div class="blue-gradient-lf"></div> -->
 
     <div id="auth">
         <?= $this->renderSection('content') ?>
